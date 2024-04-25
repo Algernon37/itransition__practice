@@ -1,0 +1,48 @@
+@import "../../variables.scss";
+* {
+    letter-spacing: 1px !important;
+}
+
+.selected {
+    background-color: #e9e6e6;
+}
+
+
+.table {
+    width: 100%;
+    flex-wrap: wrap;
+    table-layout: auto;
+    border-collapse: collapse;
+    align-content: center;
+    justify-content: center;
+    overflow-x: auto;
+}
+
+.table th,
+.table td {
+    padding: 4px;
+    border: 1px solid #ddd;
+    text-align: left;
+    width: 10%;
+}
+
+.selected {
+    background-color: #f1f1f1;
+}
+
+@media (max-width: 1262px) {
+    .table th:nth-child(4),
+    .table td:nth-child(4) {
+        display: none;
+    }
+}
+
+@media (max-width: 450px) {
+    .tableTitle {
+        display: none;
+    }
+    .table th:nth-child(6),
+    .table td:nth-child(6) {
+        display: none;
+    }
+}
