@@ -1,0 +1,30 @@
+body{
+    justify-content: center;
+}
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: 2px !important;
+    text-decoration: none;
+}
+
+h1{
+    margin-top: 20px;
+}
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    gap: 20px;
+}
+
+@media (max-width: 944px) {
+    h1{
+        display: none;
+    }
+}
+
