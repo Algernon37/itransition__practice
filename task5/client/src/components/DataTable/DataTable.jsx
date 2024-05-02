@@ -6,14 +6,22 @@ const DataTable = ({ seed, region, errors }) => {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [prevParams, setPrevParams] = useState({ seed, region, errors }); 
 
   useEffect(() => {
+    if (prevParams.seed !== seed || prevParams.region !== region || prevParams.errors !== errors) {
+      setPage(1); 
+      setTimeout(() => setData([]), 100);
+      setPrevParams({ seed, region, errors });
+    }
+  
     fetchData();
   }, [seed, region, errors, page]);
+  
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://localhost:3000/generate-data', {
+      const response = await fetch('http://31.128.32.128:3000/generate-data', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ seed, region, errors, pageNumber: page })
@@ -22,19 +30,17 @@ const DataTable = ({ seed, region, errors }) => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const newData = await response.json();
-      if (page > 1) {
-        setData(prevData => [...prevData, ...newData]);
-      } else {
-        setData(newData);
-      }
+    
+      setData(prevData => (page > 1 ? [...prevData, ...newData] : newData));
       setHasMore(newData.length === 20);
     } catch (error) {
       console.error("Fetch error: " + error.message);
     }
   };
+  
 
   return (
-    <InfiniteScroll 
+    <InfiniteScroll
       dataLength={data.length}
       next={() => setPage(prevPage => prevPage + 1)}
       hasMore={hasMore}
